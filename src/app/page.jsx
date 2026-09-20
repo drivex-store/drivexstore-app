@@ -1,4 +1,4 @@
-import getHomePageData from "@libs/sanity/queries/HomePage/HomePageData";
+import { getHomePageData } from "@libs/sanity/queries/HomePage/HomePageData";
 import HeroSection from "@views/home/HeroSection";
 import CardsSection from "@views/home/CardsSection";
 import AnimatedListSection from "@views/home/AnimatedListSection";

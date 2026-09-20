@@ -2,15 +2,10 @@ import AppProviders from '@app/providers';
 import './style.css';
 import AppLayout from '@components/AppLayout';
 import Script from 'next/script';
-import LocalFont from 'next/font/local';
 import SpeedInsights from "@vercel/speed-insights/next";
 import Analytics from '@vercel/analytics/next';
 
-const geistMono = LocalFont({
-  src: '../../../public/fonts/GeistMono[wght].woff2',
-  variable: '--font-geist-mono',
-  preload: false,
-});
+const geistMonoVariableClassName = 'geistmono_3b3e651d-module__HiZKDa__variable';
 
 export const metadata = {
   metadataBase: new URL(
@@ -95,7 +90,7 @@ export default function RootLayout({ children }) {
   const themeScript = `(function(){try{var t = localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})()`;
 
   return (
-    <html lang="en" className={geistMono.variable} suppressHydrationWarning>
+    <html lang="en" className={geistMonoVariableClassName} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://use.typekit.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://p.typekit.net" crossOrigin="anonymous" />

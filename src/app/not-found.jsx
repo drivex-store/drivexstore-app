@@ -4,13 +4,13 @@ import { useState, useRef, useEffect } from 'react';
 import { useGSAP, gsap } from '@libs/vendor';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import AnimatedHeadline from '@animations/components/AnimatedHeadline';
-import AnimatedButton from '@animations/components/AnimatedButton';
-import useAsciiDelay from '@hooks/useAsciiDelay'; 
-import useIsTouchDevice from '@hooks/useIsTouchDevice';
-import useMousePosition from '@hooks/useMousePosition';
-import usePageEnter from '@hooks/usePageEnter';
-import useHideFooter from '@providers/FooterProvider';
+import { AnimatedHeadline } from '@animations/components/AnimatedHeadline';
+import { AnimatedButton } from '@animations/components/AnimatedButton';
+import { useAsciiDelay } from '@hooks/useAsciiDelay';
+import { useIsTouchDevice } from '@hooks/useIsTouchDevice';
+import { useMousePosition } from '@hooks/useMousePosition';
+import { usePageEnter } from '@hooks/usePageEnter';
+import { useHideFooter } from '@providers/FooterProvider';
 import { ASCII_GSAP_DURATION, ASCII_EASE, ASCII_COLOR_DELAY } from '@libs/constants/constants';
 
 const AsciiTypewriter = dynamic(

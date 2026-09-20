@@ -1,12 +1,12 @@
 "use client";
 
-import LenisProvider from '@providers/LenisProvider';
+import { LenisProvider } from '@providers/LenisProvider';
 import PreloaderProvider from '@providers/PreloaderProvider';
-import PageTransitionProvider from '@providers/PageTransitionProvider';
-import PageEnterProvider from '@providers/PageEnterProvider';
-import ModalProvider from '@providers/ModalProvider';
+import { PageTransitionProvider } from '@providers/PageTransitionProvider';
+import { PageEnterProvider } from '@providers/PageEnterProvider';
+import { ModalProvider } from '@providers/ModalProvider';
 import { FooterVisibilityProvider as FooterProvider } from '@providers/FooterProvider';
-import LazyAnalytics from '@libs/analytics/LazyAnalytics';
+import { LazyAnalytics } from '@libs/analytics/LazyAnalytics';
 
 export default function AppProviders({ children }) {
   return (
