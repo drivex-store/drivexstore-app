@@ -1,11 +1,11 @@
 import notFound from "next/navigation";
-import HeroSection from "@views/general/animations/HeroSection";
-import ProjectInfoSection from "@views/work/ProjectInfoSection";
-import NextProjectSection from "@views/components/NextProjectSection";
-import sectionRegistry from "@features/page-builder/sectionRegistry";
-import getHeroSectionData from "@libs/sanity/queries/WorkPage/animations/HeroSectionData";
-import getProjectPageBuilderSections from "@libs/sanity/queries/WorkPage/ProjectPageBuilderData";
-import getNextProject from "@libs/sanity/queries/WorkPage/animations/NextProjectData";
+import { HeroSection } from "@views/general/animations/HeroSection";
+import { ProjectInfoSection } from "@views/work/ProjectInfoSection";
+import { NextProjectSection } from "@views/components/NextProjectSection";
+import { sectionRegistry } from "@features/page-builder/sectionRegistry";
+import { getHeroSectionData } from "@libs/sanity/queries/WorkPage/animations/HeroSectionData";
+import { getProjectPageBuilderSections } from "@libs/sanity/queries/WorkPage/ProjectPageBuilderData";
+import { getNextProject } from "@libs/sanity/queries/WorkPage/animations/NextProjectData";
 
 function ProjectSections({ sections }) {
   return sections.map((section, index) => {

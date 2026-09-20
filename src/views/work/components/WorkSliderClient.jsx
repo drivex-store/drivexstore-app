@@ -1,7 +1,7 @@
 'use client'
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
-import { ScrambleGroup } from '@shared/contexts/ScrambleContext'
+import { ScrambleGroup } from '@animations/components/ScrambleGroup'
 import { FilterDropdown } from '@views/work/components/FilterDropdown'
 import { WorkGridDuo, WorkGridTrio } from '@views/work/components/WorkGrid'
 import { WorkList } from '@views/work/components/WorkList'
