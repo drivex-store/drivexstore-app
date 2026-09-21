@@ -7,7 +7,6 @@ import { usePageTransition } from '@hooks/usePageTransition';
 import { Link } from '@libs/constants/navigation';
 import { SanityMedia } from '@libs/sanity/components/SanityMedia';
 
-
 function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }

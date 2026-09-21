@@ -3,6 +3,7 @@ import HeroParallax from "@views/components/HeroParallax";
 
 const SECTION_CLASS_NAME = "relative overflow-hidden bg-background pt-0 pb-0";
 const HERO_THEME = "dark";
+
 export default async function HeroSection({ slug, caseStudy }) {
   const data = caseStudy ?? (await getHeroSectionData(slug));
   const hero = data?.hero;
