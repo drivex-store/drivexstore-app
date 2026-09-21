@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { AnimatedProse } from "@animations/components/AnimatedProse";
 import { AnimatedText } from "@animations/components/AnimatedText";
 
@@ -50,14 +51,14 @@ export default function LegalPageSection({ theme, selector, className, content }
               {lastUpdated && <Paragraph>{`Last updated: ${lastUpdated}`}</Paragraph>}
 
               {sections.map((section, i) => (
-                <div key={i} className="contents">
+                <Fragment key={i}>
                   <Heading>{section.heading}</Heading>
                   {section.body && <Paragraph>{section.body}</Paragraph>}
                   <BulletList items={section.list} />
                   {(section.additional || []).map((paragraph, j) => (
-                    <Paragraph key={j}>{paragraph}</Paragraph>
+                    <Paragraph key={`${i}-${j}`}>{paragraph}</Paragraph>
                   ))}
-                </div>
+                </Fragment>
               ))}
             </AnimatedProse>
           </div>
