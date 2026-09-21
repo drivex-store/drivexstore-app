@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { gsap, SplitText } from '@libs/vendor';
-import { ScrambleGroup } from '@shared/contexts/ScrambleContext';
+import { ScrambleGroup } from '@animations/components/ScrambleGroup';
 import { ScrambleText } from '@animations/components/ScrambleText';
 import { SanityRichText } from '@libs/sanity/components/SanityRichText';
 import { useBreakpoint } from '@hooks/useIsTouchDevice';

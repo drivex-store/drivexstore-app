@@ -7,7 +7,7 @@ import SpeedInsights from "@vercel/speed-insights/next";
 import Analytics from '@vercel/analytics/next';
 
 const geistMono = LocalFont({
-  src: '../../../public/fonts/GeistMono[wght].woff2',
+  src: '../../public/fonts/GeistMono[wght].woff2',
   variable: '--font-geist-mono',
   preload: false,
 });

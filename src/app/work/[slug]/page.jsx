@@ -1,6 +1,6 @@
-import notFound from "next/navigation";
+import { notFound } from "next/navigation";
 import { HeroSection } from "@views/general/animations/HeroSection";
-import { ProjectInfoSection } from "@views/work/ProjectInfoSection";
+import ProjectInfoSection from "@views/work/ProjectInfoSection";
 import { NextProjectSection } from "@views/components/NextProjectSection";
 import { sectionRegistry } from "@features/page-builder/sectionRegistry";
 import { getHeroSectionData } from "@libs/sanity/queries/WorkPage/animations/HeroSectionData";

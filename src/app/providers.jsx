@@ -1,7 +1,7 @@
 "use client";
 
 import { LenisProvider } from '@providers/LenisProvider';
-import { PreloaderProvider } from '@providers/PreloaderProvider';
+import PreloaderProvider from '@providers/PreloaderProvider';
 import { PageTransitionProvider } from '@providers/PageTransitionProvider';
 import { PageEnterProvider } from '@providers/PageEnterProvider';
 import { ModalProvider } from '@providers/ModalProvider';

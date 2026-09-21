@@ -1,16 +1,11 @@
 "use client";
 
 import React, { useRef, useEffect, useCallback } from 'react';
-import gsap from 'gsap';
-import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
-import { ScrollTrigger } from 'gsap/ScrollTrigger'; 
-
-gsap.registerPlugin(ScrollTrigger);
-gsap.registerPlugin(ScrambleTextPlugin);
+import { gsap, ScrambleTextPlugin, ScrollTrigger } from '@libs/vendor'; 
 
 const DEFAULT_CHARS = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
-export function useDualLayerScramble(defaultConfig) {
+export default function useDualLayerScramble(defaultConfig) {
   const containerRef = useRef(null);
   const timelineRef = useRef(null);
   const originalTextRef = useRef("");

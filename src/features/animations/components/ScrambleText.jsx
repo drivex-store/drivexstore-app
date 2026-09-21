@@ -1,63 +1,65 @@
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useEffect, useCallback, useMemo } from 'react';
 import { gsap, ScrambleTextPlugin } from '@libs/vendor';
 import { useScrambleGroup } from '@animations/hooks/useScrambleGroup';
-import { defaultChars } from '@libs/constants/constants';
 
-import React, { useRef, useEffect, useCallback, useMemo } from 'react'; // module id: 271645
-import gsap from 'gsap'; // module id: 989970
-import { useScrambleGroup } from '@features/animations/hooks/useScrambleGroup';
+const DEFAULT_CHARS = " .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$";
 
-// Fallback constant for undefined 'v' in the provided minified source
-const DEFAULT_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:',.<>/?";
-
-export function ScrambleText(props) {
-  const {
-    children,
-    className,
-    duration = 0.6,
-    chars = DEFAULT_CHARS,
-    dualLayer = true,
-    triggerOnHover = false,
-    revealMode = false,
-    theme = "dark",
-    firstColorClass,
-    secondColorClass,
-    onComplete,
-    onReady,
-    multiLine = false
-  } = props;
-
-  const containerRef = useRef(null);
+export function ScrambleText({
+  children,
+  className,
+  duration = 0.6,
+  chars = DEFAULT_CHARS,
+  dualLayer = true,
+  triggerOnHover = false,
+  revealMode = false,
+  theme = "dark",
+  firstColorClass,
+  secondColorClass,
+  onComplete,
+  onReady,
+  multiLine = false
+}) {
+  const wrapperRef = useRef(null);
   const textRef = useRef(null);
   const timelineRef = useRef(null);
-  const originalTextRef = useRef("");
-  const hasCompletedRef = useRef(false);
+  const prevTextRef = useRef("");
+  const hasAnimatedRef = useRef(false);
 
-  // Replicating React Compiler memoized random ID generation
-  const componentId = useRef(`scramble-${Math.random().toString(36).slice(2, 9)}`);
+  
+  const instanceIdRef = useRef();
+  if (!instanceIdRef.current) {
+    instanceIdRef.current = `scramble-${Math.random().toString(36).slice(2, 9)}`;
+  }
 
-  const themeConfig = useMemo(() => {
-    return theme === "brand" 
-      ? { firstColorClass: "scramble-white", secondColorClass: "scramble-foreground" }
-      : { firstColorClass: "scramble-brand", secondColorClass: "scramble-foreground" };
+  const themeColors = useMemo(() => {
+    if (theme === "brand") {
+      return {
+        firstColorClass: "scramble-white",
+        secondColorClass: "scramble-foreground"
+      };
+    }
+    return {
+      firstColorClass: "scramble-brand",
+      secondColorClass: "scramble-foreground"
+    };
   }, [theme]);
 
-  const colorClass1 = firstColorClass ?? themeConfig.firstColorClass;
-  const colorClass2 = secondColorClass ?? themeConfig.secondColorClass;
-  const scrambleGroupContext = useScrambleGroup();
-
-  let extractedText = "";
+  const color1 = firstColorClass ?? themeColors.firstColorClass;
+  const color2 = secondColorClass ?? themeColors.secondColorClass;
+  const scrambleGroup = useScrambleGroup();
+ 
+  let textContent = "";
   if (typeof children === "string") {
-    extractedText = children;
+    textContent = children;
   } else if (typeof children === "number") {
-    extractedText = String(children);
+    textContent = String(children);
   }
 
   useEffect(() => {
-    originalTextRef.current = extractedText;
-  }, [extractedText]);
+    prevTextRef.current = textContent;
+  }, [textContent]);
 
   const killTimeline = useCallback(() => {
     if (timelineRef.current) {
@@ -66,19 +68,18 @@ export function ScrambleText(props) {
     }
   }, []);
 
-  const playAnimation = useCallback(() => {
+  const scramble = useCallback(() => {
     if (!textRef.current) return null;
     
-    const targetElement = textRef.current;
-    const targetText = originalTextRef.current || extractedText;
-    
+    const element = textRef.current;
+    const targetText = prevTextRef.current || textContent;
+
     if (!targetText || targetText.length === 0) return null;
 
-    // Accessibility check for reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      targetElement.textContent = targetText;
-      targetElement.className = targetElement.className.replace(/\bscramble-\w+\b/g, "");
-      hasCompletedRef.current = true;
+      element.textContent = targetText;
+      element.className = element.className.replace(/\bscramble-\w+\b/g, "");
+      hasAnimatedRef.current = true;
       onComplete?.();
       return null;
     }
@@ -88,73 +89,77 @@ export function ScrambleText(props) {
     timelineRef.current = gsap.timeline({
       onComplete: () => {
         timelineRef.current = null;
-        hasCompletedRef.current = true;
+        hasAnimatedRef.current = true;
         onComplete?.();
       }
     });
 
     if (dualLayer) {
-      // Generate randomized initial string matching spacing/newlines
-      const initialScrambled = (function(textStr, charset = DEFAULT_CHARS) {
-        let result = "";
+      const generateScramble = (textStr, charSet = DEFAULT_CHARS) => {
+        let res = "";
         for (let i = 0; i < textStr.length; i++) {
           const char = textStr[i];
           if (char === " " || char === "\n" || char === "\r") {
-            result += char;
+            res += char;
           } else {
-            result += charset[Math.floor(Math.random() * charset.length)];
+            res += charSet[Math.floor(Math.random() * charSet.length)];
           }
         }
-        return result;
-      })(targetText, chars);
+        return res;
+      };
 
-      const nonSpaceLength = targetText.replace(/\s/g, "").length;
-      const progressDelay = nonSpaceLength > 0 ? duration / nonSpaceLength : 0;
+      const randomText = generateScramble(targetText, chars);
+      const nonSpaceCount = targetText.replace(/\s/g, "").length;
+      
+      
+      const phaseTwoPosition = nonSpaceCount > 0 ? duration / nonSpaceCount : 0;
 
-      if (revealMode && !hasCompletedRef.current) {
-        targetElement.textContent = targetText.replace(/[^\s\n\r]/g, "\u00A0"); // replaces chars with non-breaking spaces
+      if (revealMode && !hasAnimatedRef.current) {
+        element.textContent = targetText.replace(/[^\s\n\r]/g, " "); 
         
-        timelineRef.current.to(targetElement, {
+        timelineRef.current.to(element, {
           duration: duration,
           scrambleText: {
-            text: initialScrambled,
+            text: randomText,
             chars: chars,
             speed: 1,
             revealDelay: 0.1,
-            oldClass: colorClass1,
-            newClass: colorClass1
+            oldClass: color1,
+            newClass: color1
           },
           ease: "none"
         });
       } else {
-        timelineRef.current.to(targetElement, {
+        timelineRef.current.to(element, {
           duration: duration,
           scrambleText: {
-            text: initialScrambled,
+            text: randomText,
             chars: chars,
             speed: 1,
             revealDelay: 0.1,
-            oldClass: colorClass2,
-            newClass: colorClass1
+            oldClass: color2,
+            newClass: color1
           },
           ease: "none"
         });
       }
 
-      timelineRef.current.to(targetElement, {
+      timelineRef.current.to(element, {
         duration: duration,
         scrambleText: {
           text: targetText,
           chars: chars,
           speed: 1,
           revealDelay: 0.1,
-          oldClass: colorClass1,
-          newClass: colorClass2
+          oldClass: color1,
+          newClass: color2
         },
         ease: "none"
-      }, progressDelay);
+      }, phaseTwoPosition);
+
     } else {
-      timelineRef.current.to(targetElement, {
+      
+      timelineRef.current.to(element, {
         duration: duration,
         scrambleText: {
           text: targetText,
@@ -167,62 +172,74 @@ export function ScrambleText(props) {
     }
 
     return timelineRef.current;
-  }, [chars, dualLayer, duration, colorClass1, onComplete, revealMode, colorClass2, extractedText, killTimeline]);
+  }, [
+    chars, dualLayer, duration, color1, color2, 
+    onComplete, revealMode, textContent, killTimeline
+  ]);
 
-  // Register with group context if available
+  
   useEffect(() => {
-    if (scrambleGroupContext) {
-      scrambleGroupContext.register(componentId.current, playAnimation);
+    if (scrambleGroup && instanceIdRef.current) {
+      scrambleGroup.register(instanceIdRef.current, scramble);
       return () => {
-        scrambleGroupContext.unregister(componentId.current);
+        scrambleGroup.unregister(instanceIdRef.current);
       };
     }
-  }, [scrambleGroupContext, playAnimation]);
+  }, [scrambleGroup, scramble]);
 
-  // Emit onReady
+  
   useEffect(() => {
-    onReady?.(playAnimation);
-  }, [onReady, playAnimation]);
+    onReady?.(scramble);
+  }, [onReady, scramble]);
 
-  // Cleanup timeline on unmount
+  const handleHover = triggerOnHover ? () => { if (triggerOnHover) scramble(); } : undefined;
+
+  
   useEffect(() => {
-    return () => {
-      killTimeline();
-    };
+    return () => killTimeline();
   }, [killTimeline]);
 
-  const handleMouseEnter = triggerOnHover ? playAnimation : undefined;
+  const displayTargetText = (revealMode ? textContent.replace(/[^\s\n\r]/g, " ") : textContent);
+  const whiteSpaceStyle = multiLine ? "normal" : "nowrap";
+  const displayStyle = multiLine ? "inline" : "inline-block";
 
-  // Render variables
-  const initialDisplayText = revealMode 
-    ? extractedText.replace(/[^\s\n\r]/g, "\u00A0") 
-    : extractedText;
-  
-  const whiteSpace = multiLine ? "normal" : "nowrap";
-  const displayMode = multiLine ? "inline" : "inline-block";
-  const lineStyleOverride = multiLine ? { width: "100%" } : {};
+  const wrapperStyle = {
+    position: "relative",
+    display: displayStyle,
+    whiteSpace: whiteSpaceStyle
+  };
+
+  const hiddenLayoutSpanStyle = {
+    visibility: "hidden",
+    whiteSpace: whiteSpaceStyle
+  };
+
+  const animatedSpanStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    whiteSpace: whiteSpaceStyle,
+    ...(multiLine ? { width: "100%" } : {})
+  };
 
   return (
-    <span 
-      ref={containerRef} 
-      className={className} 
-      style={{ position: "relative", display: displayMode, whiteSpace: whiteSpace }}
-      onMouseEnter={handleMouseEnter}
+    <span
+      ref={wrapperRef}
+      className={className}
+      style={wrapperStyle}
+      onMouseEnter={handleHover}
     >
+      {}
       <span className="sr-only">
-        {extractedText}
+        {textContent}
       </span>
-      
-      <span aria-hidden="true" style={{ visibility: "hidden", whiteSpace: whiteSpace }}>
-        {extractedText}
+      {}
+      <span aria-hidden="true" style={hiddenLayoutSpanStyle}>
+        {textContent}
       </span>
-      
-      <span 
-        ref={textRef} 
-        aria-hidden="true" 
-        style={{ position: "absolute", top: 0, left: 0, whiteSpace: whiteSpace, ...lineStyleOverride }}
-      >
-        {initialDisplayText}
+      {}
+      <span ref={textRef} aria-hidden="true" style={animatedSpanStyle}>
+        {displayTargetText}
       </span>
     </span>
   );

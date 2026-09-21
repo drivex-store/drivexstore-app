@@ -1,5 +1,5 @@
 import { ModalOverlay } from '@components/ui/ModalOverlay'; 
-import { Preloader } from '@animations/utils/pageLoader';
+import { Preloader } from '@animations/utils/Preloader';
 import { HeaderClient } from '@components/layout/HeaderClient';
 import { FooterClient } from '@components/layout/FooterClient';
 import { NewsletterPopupClient } from '@features/newsletters/NewsletterPopupClient';
