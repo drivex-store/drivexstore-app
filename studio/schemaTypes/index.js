@@ -7,6 +7,7 @@ import availability from "./objects/availability";
 import contact from "./objects/contact";
 import linkField from "./objects/linkField";
 import richText from "./objects/richText";
+import legalRichText from "./objects/legalRichText";
 import logoImage from "./objects/logoImage";
 import svgItem from "./objects/svgItem";
 import textItem from "./objects/textItem";
@@ -49,6 +50,9 @@ import pricingFaqSection from "./pages/PricingPage/sections/pricingFaqSection";
 import contactPage from "./pages/ContactPage/contactPage";
 import contactHero from "./pages/ContactPage/sections/contactHero";
 
+// --- Legal pages (Privacy Policy, Terms, etc.) ---
+import legalPage from "./pages/LegalPage/legalPage";
+
 export const schemaTypes = [
   // objects
   customImage,
@@ -60,6 +64,7 @@ export const schemaTypes = [
   contact,
   linkField,
   richText,
+  legalRichText,
   logoImage,
   svgItem,
   textItem,
@@ -102,4 +107,7 @@ export const schemaTypes = [
   // contact page
   contactPage,
   contactHero,
+
+  // legal pages
+  legalPage,
 ];

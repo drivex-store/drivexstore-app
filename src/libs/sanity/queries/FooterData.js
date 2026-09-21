@@ -1,4 +1,5 @@
 import { sanityClient } from "@libs/sanity/client";
+import { linkProjection, linkFieldMarkDefProjection } from "@libs/sanity/queries/fragments/link";
 
 const imageProjection = `{
   "_id": asset->_id,
@@ -12,13 +13,12 @@ const imageProjection = `{
   "title": asset->title
 }`;
 
-const linkProjection = `{
-  canDownload,
-  href,
-  modalId,
-  openInNewTab,
-  text,
-  type
+const richTextProjection = `[]{
+  ...,
+  markDefs[]{
+    ...,
+    ${linkFieldMarkDefProjection}
+  }
 }`;
 
 const FOOTER_QUERY = `*[_type == "footer"][0]{
@@ -31,8 +31,8 @@ const FOOTER_QUERY = `*[_type == "footer"][0]{
     },
     title
   },
-  contactInformation,
-  copyrightNotice,
+  "contactInformation": contactInformation${richTextProjection},
+  "copyrightNotice": copyrightNotice${richTextProjection},
   "asciiImageLeft": asciiImageLeft${imageProjection},
   "asciiDepthMapLeft": asciiDepthMapLeft${imageProjection},
   asciiColorLeft,
