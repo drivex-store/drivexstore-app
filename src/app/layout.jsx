@@ -3,8 +3,8 @@ import './style.css';
 import AppLayout from '@components/AppLayout';
 import Script from 'next/script';
 import LocalFont from 'next/font/local';
-import SpeedInsights from "@vercel/speed-insights/next";
-import Analytics from '@vercel/analytics/next';
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistMono = LocalFont({
   src: '../../public/fonts/GeistMono[wght].woff2',
