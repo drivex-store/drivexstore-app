@@ -7,7 +7,7 @@ import availability from "./objects/availability";
 import contact from "./objects/contact";
 import linkField from "./objects/linkField";
 import richText from "./objects/richText";
-import legalRichText from "./objects/legalRichText";
+import pageBuilderSection from "./objects/pageBuilderSection";
 import logoImage from "./objects/logoImage";
 import svgItem from "./objects/svgItem";
 import textItem from "./objects/textItem";
@@ -64,7 +64,7 @@ export const schemaTypes = [
   contact,
   linkField,
   richText,
-  legalRichText,
+  pageBuilderSection,
   logoImage,
   svgItem,
   textItem,

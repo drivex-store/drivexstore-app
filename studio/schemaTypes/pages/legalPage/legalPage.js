@@ -1,7 +1,3 @@
-// New document type — a small collection so any number of standalone
-// content pages (Privacy Policy, Terms of Service, Cookie Policy...) can be
-// added later without touching schema/code again, matching how `project`
-// (work/[slug]) works.
 export default {
   name: "legalPage",
   title: "Legal Page",
@@ -12,7 +8,7 @@ export default {
       title: "Title",
       type: "string",
       description:
-        "Used for the browser tab title and the Studio document list — not rendered on the page itself. Put the visible \"Privacy Policy\" heading and \"Last updated: ...\" line as the first two blocks inside Content below, exactly like the reference site does.",
+        "Used for the browser tab title and the Studio document list. The visible on-page heading comes from the Text Section's own \"title\" field below.",
       validation: (Rule) => Rule.required(),
     },
     {
@@ -24,17 +20,12 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "theme",
-      title: "Theme",
-      type: "string",
-      options: { list: [{ title: "Light", value: "light" }, { title: "Dark", value: "dark" }] },
-      initialValue: "light",
-    },
-    {
-      name: "richText",
-      title: "Content",
-      type: "legalRichText",
-      validation: (Rule) => Rule.required(),
+      name: "pageBuilder",
+      title: "Sections",
+      description: "Drag to reorder.",
+      type: "array",
+      of: [{ type: "pageBuilderSection" }],
+      validation: (Rule) => Rule.required().min(1),
     },
   ],
   preview: {
