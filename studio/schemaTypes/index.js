@@ -48,7 +48,9 @@ import pricingFaqSection from "./pages/PricingPage/sections/pricingFaqSection";
 import contactPage from "./pages/ContactPage/contactPage";
 import contactHero from "./pages/ContactPage/sections/contactHero";
 
-import legalPage from "./pages/legalPage/legalPage";
+import page from "./pages/legalPage/legalPage";
+import tabsSection from "./objects/tabsSection";
+import tabsSectionField from "./objects/tabsSectionField";
 
 export const schemaTypes = [
   customImage,
@@ -67,7 +69,8 @@ export const schemaTypes = [
   seoMetadata,
   tabsSection,
   textSectionField,
-
+  tabsSection,
+  tabsSectionField,
   project,
   header,
   footer,

@@ -37,7 +37,7 @@ export default {
             { type: "contactPage" },
             { type: "workPage" },
             { type: "project" },
-            { type: "legalPage" },
+            { type: "page" },
           ],
         },
       ],
