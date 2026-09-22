@@ -22,15 +22,31 @@ const richTextProjection = `[]{
 }`;
 
 const FOOTER_QUERY = `*[_type == "footer"][0]{
-  navigation{
-    availability,
+  navigation->{
+    title,
+    navId,
+    "availability": flyoutAvailability, 
+    flyoutCenterImage {
+      caption,
+      "image": image${imageProjection},
+      "link": link${linkProjection}
+    },
+    flyoutContact,
+    flyoutFeaturedProject {
+      caption,
+      project->
+    },
+    flyoutLocation,
+    flyoutSocials,
+    flyoutTeam,
+    "headerCta": headerCta${linkProjection},
     items[]{
       _key,
       text,
-      "link": link${linkProjection}
-    },
-    title
+      "link": navigationItemUrl${linkProjection}
+    }
   },
+  "leftText": leftText${richTextProjection},
   "contactInformation": contactInformation${richTextProjection},
   "copyrightNotice": copyrightNotice${richTextProjection},
   "asciiImageLeft": asciiImageLeft${imageProjection},
@@ -51,8 +67,7 @@ const FOOTER_QUERY = `*[_type == "footer"][0]{
   asciiRevealOriginX,
   asciiRevealOriginY,
   "asciiMobileFallback": asciiMobileFallback${imageProjection},
-  showWatermark,
-  spotsRemaining
+  showWatermark
 }`;
 
 export async function getFooterData() {

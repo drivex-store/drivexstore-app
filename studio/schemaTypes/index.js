@@ -50,6 +50,9 @@ import contactPage from "./pages/ContactPage/contactPage";
 import contactHero from "./pages/ContactPage/sections/contactHero";
 
 import page from "./pages/legalPage/legalPage";
+import navigation from "./pages/legalPage/legalPage";
+
+
 
 export const schemaTypes = [
   customImage,
@@ -73,6 +76,8 @@ export const schemaTypes = [
   project,
   header,
   footer,
+  
+  navigation,
 
   homePage,
   heroSection,
