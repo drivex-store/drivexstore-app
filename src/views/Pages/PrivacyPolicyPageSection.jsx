@@ -35,7 +35,7 @@ const portableTextComponents = {
   },
 };
 
-export default function LegalPageSection({
+export default function PrivacyPolicyPageSection({
   theme,
   selector,
   className,

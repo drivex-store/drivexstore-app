@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
-import LegalPageSection from "@views/legal/LegalPageSection";
-import { getLegalPageBySlug, getAllLegalPageSlugs } from "@libs/sanity/queries/LegalPage/LegalPageData";
+import PrivacyPolicyPageSection from "@views/Pages/PrivacyPolicyPageSection";
+import { getPrivacyPolicyPageSectionSlug, getAllPrivacyPolicyPageSlugs } from "@libs/sanity/queries/Pages/PrivacyPolicyPageData";
 
 const sectionRegistry = {
-  textSectionField: LegalPageSection,
+  textSectionField: PrivacyPolicyPageSection,
 };
 
-export default async function LegalPage({ params }) {
+export default async function PrivacyPolicyPage({ params }) {
   const { slug } = await params;
-  const page = await getLegalPageBySlug(slug);
+  const page = await getPrivacyPolicyPageSectionSlug(slug);
 
   if (!page) {
     notFound();
@@ -35,13 +35,13 @@ export default async function LegalPage({ params }) {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllLegalPageSlugs();
+  const slugs = await getAllPrivacyPolicyPageSlugs();
   return (slugs || []).map(({ slug }) => ({ slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const page = await getLegalPageBySlug(slug);
+  const page = await getPrivacyPolicyPageSectionSlug(slug);
 
   if (!page) {
     return { title: "Not found" };
