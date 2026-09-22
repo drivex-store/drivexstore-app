@@ -50,8 +50,7 @@ import contactPage from "./pages/ContactPage/contactPage";
 import contactHero from "./pages/ContactPage/sections/contactHero";
 
 import page from "./pages/legalPage/legalPage";
-import navigation from "./pages/legalPage/legalPage";
-
+import navigation from "./documents/navigation";
 
 
 export const schemaTypes = [
