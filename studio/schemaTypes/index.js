@@ -13,6 +13,7 @@ import svgItem from "./objects/svgItem";
 import textItem from "./objects/textItem";
 import seoMetadata from "./objects/seoMetadata";
 import tabsSection from "./objects/tabsSection";
+import tabsSectionField from "./objects/tabsSectionField";
 import textSectionField from "./objects/textSectionField";
 
 import project from "./documents/project";
@@ -49,8 +50,6 @@ import contactPage from "./pages/ContactPage/contactPage";
 import contactHero from "./pages/ContactPage/sections/contactHero";
 
 import page from "./pages/legalPage/legalPage";
-import tabsSection from "./objects/tabsSection";
-import tabsSectionField from "./objects/tabsSectionField";
 
 export const schemaTypes = [
   customImage,
@@ -68,9 +67,9 @@ export const schemaTypes = [
   textItem,
   seoMetadata,
   tabsSection,
-  textSectionField,
-  tabsSection,
   tabsSectionField,
+  textSectionField,
+
   project,
   header,
   footer,
@@ -104,5 +103,5 @@ export const schemaTypes = [
   contactPage,
   contactHero,
 
-  legalPage,
+  page,
 ];
