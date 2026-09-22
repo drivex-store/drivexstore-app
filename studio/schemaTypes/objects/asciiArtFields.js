@@ -1,6 +1,4 @@
-// Not a registered schema type. Returns a flat array of fields whose
-// names match the exact query paths in HeroSectionData.js / FooterData.js
-// (e.g. "asciiImage" / "asciiImageLeft"), so existing GROQ queries keep working.
+
 export function asciiArtFields(suffix = "") {
   return [
     { name: `asciiImage${suffix}`, title: `ASCII image${suffix ? ` (${suffix})` : ""}`, type: "customImage" },

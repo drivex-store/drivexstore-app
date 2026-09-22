@@ -1,6 +1,3 @@
-// Matches the API payload contract exactly:
-// { _type: "pageBuilderSection", sectionType: "textSection", theme, selector,
-//   className, content: { title, lastUpdated, sections: [{heading, body, list, additional}] } }
 export default {
   name: "pageBuilderSection",
   title: "Page Builder Section",

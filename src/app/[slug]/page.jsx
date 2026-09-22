@@ -3,7 +3,7 @@ import LegalPageSection from "@views/legal/LegalPageSection";
 import { getLegalPageBySlug, getAllLegalPageSlugs } from "@libs/sanity/queries/LegalPage/LegalPageData";
 
 const sectionRegistry = {
-  textSection: LegalPageSection,
+  textSectionField: LegalPageSection,
 };
 
 export default async function LegalPage({ params }) {
@@ -14,16 +14,21 @@ export default async function LegalPage({ params }) {
     notFound();
   }
 
-  return (page.pageBuilder || []).map((section, index) => {
-    const Component = sectionRegistry[section.sectionType];
+  const sections = page.pageBuilder?.sectionsArray || [];
+
+  return sections.map((section) => {
+    const Component = sectionRegistry[section._type];
     if (!Component) return null;
+
     return (
       <Component
-        key={index}
-        theme={section.theme}
-        selector={section.selector}
-        className={section.className}
-        content={section.content}
+        key={section._key}
+        theme={section.sectionContent?.theme}
+        selector={section.sectionSettings?.customSelector}
+        title={section.sectionSettings?.sectionTitle}
+        paddingTop={section.sectionContent?.paddingTop}
+        paddingBottom={section.sectionContent?.paddingBottom}
+        content={section.sectionContent?.appRichText}
       />
     );
   });
@@ -42,5 +47,8 @@ export async function generateMetadata({ params }) {
     return { title: "Not found" };
   }
 
-  return { title: page.title };
+  return {
+    title: page.seoMetadata?.title || page.title,
+    description: page.seoMetadata?.description,
+  };
 }

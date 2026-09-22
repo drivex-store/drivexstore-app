@@ -11,6 +11,9 @@ import pageBuilderSection from "./objects/pageBuilderSection";
 import logoImage from "./objects/logoImage";
 import svgItem from "./objects/svgItem";
 import textItem from "./objects/textItem";
+import seoMetadata from "./objects/seoMetadata";
+import tabsSection from "./objects/tabsSection";
+import textSectionField from "./objects/textSectionField";
 
 import project from "./documents/project";
 import header from "./globals/header";
@@ -25,18 +28,15 @@ import indexedGridSection from "./pages/HomePage/sections/indexedGridSection";
 import accordionSection from "./pages/HomePage/sections/accordionSection";
 import contentBlockSection from "./pages/HomePage/sections/contentBlockSection";
 
-// --- About page ---
 import aboutPage from "./pages/AboutPage/aboutPage";
 import aboutHero from "./pages/AboutPage/sections/aboutHero";
 import storySection from "./pages/AboutPage/sections/storySection";
 
-// --- Work page ---
 import workPage from "./pages/WorkPage/workPage";
 import workHero from "./pages/WorkPage/workHero";
 import workSliderSection from "./pages/WorkPage/workSliderSection";
 import mediaSection from "./projects/mediaSection";
 
-// --- Pricing page ---
 import pricingPage from "./pages/PricingPage/pricingPage";
 import pricingHero from "./pages/PricingPage/sections/pricingHero";
 import logoSection from "./pages/PricingPage/sections/logoSection";
@@ -45,16 +45,12 @@ import servicesListSection from "./pages/PricingPage/sections/servicesListSectio
 import tableSection from "./pages/PricingPage/sections/tableSection";
 import pricingFaqSection from "./pages/PricingPage/sections/pricingFaqSection";
 
-
-// --- Contact page ---
 import contactPage from "./pages/ContactPage/contactPage";
 import contactHero from "./pages/ContactPage/sections/contactHero";
 
-// --- Legal pages (Privacy Policy, Terms, etc.) ---
-import legalPage from "./pages/LegalPage/legalPage";
+import legalPage from "./pages/legalPage/legalPage";
 
 export const schemaTypes = [
-  // objects
   customImage,
   link,
   ctaButton,
@@ -68,13 +64,14 @@ export const schemaTypes = [
   logoImage,
   svgItem,
   textItem,
+  seoMetadata,
+  tabsSection,
+  textSectionField,
 
-  // site-wide singletons
   project,
   header,
   footer,
 
-  // home page
   homePage,
   heroSection,
   cardsSection,
@@ -84,18 +81,15 @@ export const schemaTypes = [
   accordionSection,
   contentBlockSection,
 
-  // about page
   aboutPage,
   aboutHero,
   storySection,
 
-  // work page
   workPage,
   workHero,
   workSliderSection,
   mediaSection,
 
-  // pricing page
   pricingPage,
   pricingHero,
   logoSection,
@@ -104,10 +98,8 @@ export const schemaTypes = [
   tableSection,
   pricingFaqSection,
 
-  // contact page
   contactPage,
   contactHero,
 
-  // legal pages
   legalPage,
 ];

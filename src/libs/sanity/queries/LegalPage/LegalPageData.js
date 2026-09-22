@@ -1,25 +1,32 @@
 import { sanityClient } from "@libs/sanity/client";
 
-const LEGAL_PAGE_QUERY = `*[_type == "legalPage" && slug.current == $slug][0]{
+const LEGAL_PAGE_QUERY = `*[_type == "page" && uri.current in [$uri, "/" + $uri]][0]{
   _id,
   title,
-  pageBuilder[]{
-    sectionType,
-    theme,
-    selector,
-    className,
-    content
+  uri,
+  seoMetadata,
+  pageBuilder {
+    sectionsArray[] {
+      _key,
+      _type,
+      sectionSettings,
+      sectionContent
+    }
   }
 }`;
 
-const LEGAL_PAGE_SLUGS_QUERY = `*[_type == "legalPage" && defined(slug.current)]{
-  "slug": slug.current
+const LEGAL_PAGE_SLUGS_QUERY = `*[_type == "page" && defined(uri.current)]{
+  "slug": uri.current
 }`;
 
 export async function getLegalPageBySlug(slug) {
-  return sanityClient.fetch(LEGAL_PAGE_QUERY, { slug }, { next: { revalidate: 60 } });
+  const uri = slug.startsWith("/") ? slug : `/${slug}`;
+  return sanityClient.fetch(LEGAL_PAGE_QUERY, { uri }, { next: { revalidate: 60 } });
 }
 
 export async function getAllLegalPageSlugs() {
-  return sanityClient.fetch(LEGAL_PAGE_SLUGS_QUERY, {}, { next: { revalidate: 60 } });
+  const data = await sanityClient.fetch(LEGAL_PAGE_SLUGS_QUERY, {}, { next: { revalidate: 60 } });
+  return data.map((item) => ({
+    slug: item.slug ? item.slug.replace(/^\//, "") : "",
+  }));
 }
