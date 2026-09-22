@@ -31,10 +31,44 @@ export default {
         },
       ],
     },
+    // ဒီအပိုင်းကို ပြင်ဆင်ထားပါတယ်
     {
       name: "headerCta",
       title: "Header CTA",
-      type: "link",
+      type: "object",
+      fields: [
+        { 
+          name: "type", 
+          title: "Link Type", 
+          type: "string",
+          initialValue: "internal",
+          options: {
+            list: [
+              { title: 'Internal', value: 'internal' },
+              { title: 'External', value: 'external' }
+            ]
+          }
+        },
+        { 
+          name: "customText", 
+          title: "Custom Text", 
+          type: "string" 
+        },
+        {
+          name: "internal",
+          title: "Internal Link",
+          type: "object",
+          hidden: ({ parent }) => parent?.type !== 'internal',
+          fields: [
+            {
+              name: "link",
+              title: "Link",
+              type: "reference",
+              to: [{ type: "page" }], // Pricing page (type: page) ကို ချိတ်ဖို့
+            }
+          ]
+        }
+      ]
     },
     {
       name: "flyoutAvailability",
