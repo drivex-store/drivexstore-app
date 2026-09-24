@@ -18,6 +18,7 @@ import textSectionField from "./objects/textSectionField";
 
 import project from "./documents/project";
 import footer from "./globals/footer";
+import site from "./globals/site";
 
 import homePage from "./pages/HomePage/homePage";
 import heroSection from "./pages/HomePage/sections/heroSection";
@@ -73,6 +74,7 @@ export const schemaTypes = [
 
   project,
   navigation,
+  site,
   footer,
 
   homePage,
