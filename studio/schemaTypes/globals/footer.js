@@ -8,7 +8,7 @@ export default {
       title: "Footer Navigation Reference",
       type: "reference",
       to: [{ type: "navigation" }],
-      description: "Footer တွင်ပြသမည့် Navigation ကို ရွေးချယ်ပါ"
+      description: "Footer Navigation"
     },
     { 
       name: "leftText", 
@@ -43,7 +43,6 @@ export default {
     { name: "asciiParallaxIntensityLeft", title: "ASCII Parallax Intensity (Left)", type: "number" },
     { name: "asciiRevealOriginXLeft", title: "ASCII Reveal Origin X (Left)", type: "number" },
     { name: "asciiRevealOriginYLeft", title: "ASCII Reveal Origin Y (Left)", type: "number" },
-    // ASCII Settings - Right
     { name: "asciiImage", title: "ASCII Image (Right)", type: "image" },
     { name: "asciiDepthMap", title: "ASCII Depth Map (Right)", type: "image" },
     { name: "asciiMobileFallback", title: "ASCII Mobile Fallback (Right)", type: "image" },
