@@ -1,65 +1,48 @@
 import { notFound } from "next/navigation";
-import HeroSection from "@views/general/animations/HeroSection";
-import ProjectInfoSection from "@views/work/ProjectInfoSection";
 import { NextProjectSection } from "@views/components/NextProjectSection";
-import { sectionRegistry } from "@features/page-builder/sectionRegistry";
-import { getHeroSectionData } from "@libs/sanity/queries/WorkPage/animations/HeroSectionData";
-import { getProjectPageBuilderSections } from "@libs/sanity/queries/WorkPage/ProjectPageBuilderData";
-import { getNextProject } from "@libs/sanity/queries/WorkPage/animations/NextProjectData";
+import { caseStudySectionRegistry } from "@features/page-builder/caseStudySectionRegistry";
+import { getCaseStudyData } from "@libs/sanity/queries/WorkPage/CaseStudy/CaseStudyData";
+import { getNextCaseStudy } from "@libs/sanity/queries/WorkPage/CaseStudy/NextCaseStudyData";
 
-function ProjectSections({ sections }) {
+function CaseStudySections({ sections }) {
+  if (!sections?.length) return null;
+
   return sections.map((section, index) => {
-    if (section.enabled === false) return null;
-
-    const Component = sectionRegistry[section.sectionType];
+    const Component = caseStudySectionRegistry[section._type];
     if (!Component) {
       console.warn(
-        `WorkDetailPage: no component registered for sectionType "${section.sectionType}"`
+        `WorkDetailPage: no component registered for section type "${section._type}"`
       );
       return null;
     }
 
-    const key = section._key || `${section.sectionType}-${index}`;
-
-    if (section.sectionType === "contentBlockSection") {
-      if (!section.contentBlockId) return null;
-      return <Component key={key} id={section.contentBlockId} />;
-    }
-
-    if (section.sectionType === "mediaSection") {
-      if (!section.mediaSectionId) return null;
-      return <Component key={key} id={section.mediaSectionId} />;
-    }
-
-    return <Component key={key} />;
+    const key = section._key || `${section._type}-${index}`;
+    return <Component key={key} {...section} />;
   });
 }
 
 export default async function WorkDetailPage({ params }) {
   const { slug } = await params;
-  const [caseStudy, sections, nextProject] = await Promise.all([
-    getHeroSectionData(slug),
-    getProjectPageBuilderSections(slug),
-    getNextProject(slug),
+  const [caseStudy, nextCaseStudy] = await Promise.all([
+    getCaseStudyData(slug),
+    getNextCaseStudy(slug),
   ]);
 
-  if (!caseStudy?.hero?.media) {
+  if (!caseStudy) {
     notFound();
   }
 
   return (
     <>
-      <HeroSection slug={slug} caseStudy={caseStudy} />
-      <ProjectInfoSection slug={slug} />
-      <ProjectSections sections={sections} />
-      {nextProject && <NextProjectSection nextProject={nextProject} />}
+      <CaseStudySections sections={caseStudy.sections} />
+      {nextCaseStudy && <NextProjectSection nextProject={nextCaseStudy} />}
     </>
   );
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const caseStudy = await getHeroSectionData(slug);
+  const caseStudy = await getCaseStudyData(slug);
 
   if (!caseStudy) {
     return { title: "Not found" };
@@ -67,6 +50,6 @@ export async function generateMetadata({ params }) {
 
   return {
     title: caseStudy.title,
-    description: caseStudy.hero?.subtext ?? undefined,
+    description: caseStudy.projectInfo?.teaserText ?? undefined,
   };
 }
