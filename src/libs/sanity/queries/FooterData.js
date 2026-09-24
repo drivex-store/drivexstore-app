@@ -67,7 +67,8 @@ const FOOTER_QUERY = `*[_type == "footer"][0]{
   asciiRevealOriginX,
   asciiRevealOriginY,
   "asciiMobileFallback": asciiMobileFallback${imageProjection},
-  showWatermark
+  showWatermark,
+  "spotsRemaining": *[_type == "site"][0].spotsRemaining
 }`;
 
 export async function getFooterData() {
