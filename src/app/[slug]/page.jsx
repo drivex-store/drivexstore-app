@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import PrivacyPolicyPageSection from "@views/Pages/PrivacyPolicyPageSection";
-import { getPrivacyPolicyPageSectionSlug, getAllPrivacyPolicyPageSlugs } from "@libs/sanity/queries/Pages/PrivacyPolicyPageData";
+import { getPrivacyPolicyPageSectionSlug, getAllPrivacyPolicyPageSectionSlug } from "@libs/sanity/queries/Pages/PrivacyPolicyPageData";
 
 const sectionRegistry = {
   textSectionField: PrivacyPolicyPageSection,
@@ -35,8 +35,8 @@ export default async function PrivacyPolicyPage({ params }) {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllPrivacyPolicyPageSlugs();
-  return (slugs || []).map(({ slug }) => ({ slug }));
+  const slugs = await getAllPrivacyPolicyPageSectionSlug();
+  return (slugs || []).filter(({ slug }) => slug);
 }
 
 export async function generateMetadata({ params }) {
