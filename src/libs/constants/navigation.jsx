@@ -71,5 +71,15 @@ function TransitionLink(props) {
 }
 
 export function Link(props) {
+  // A CMS link without href would make next/link crash the whole page
+  // ("Cannot destructure property 'auth' from null or undefined value").
+  // Render a plain <a> without navigation instead.
+  if (!props.href && !props.as) {
+    const {
+      href, as, replace, scroll, prefetch, shallow, passHref,
+      legacyBehavior, onNavigate, ...rest
+    } = props;
+    return <a {...rest} />;
+  }
   return <TransitionLink {...props} />;
 }
