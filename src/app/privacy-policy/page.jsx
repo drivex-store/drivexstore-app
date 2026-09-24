@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import PrivacyPolicyPageSection from "@views/Pages/PrivacyPolicyPageSection";
-import { getPrivacyPolicyPageSectionSlug, getAllPrivacyPolicyPageSectionSlug } from "@libs/sanity/queries/Pages/PrivacyPolicyPageData";
+import PrivacyPolicyPageSection from "@views/privacy-policy/PrivacyPolicyPageSection";
+import { getPrivacyPolicyPageSectionSlug, getAllPrivacyPolicyPageSectionSlug } from "@libs/sanity/queries/privacy-policy/PrivacyPolicyPageData";
 
 const sectionRegistry = {
   textSectionField: PrivacyPolicyPageSection,
