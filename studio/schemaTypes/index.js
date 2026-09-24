@@ -17,7 +17,7 @@ import tabsSectionField from "./objects/tabsSectionField";
 import textSectionField from "./objects/textSectionField";
 
 import project from "./documents/project";
-
+import footer from "./globals/footer";
 
 import homePage from "./pages/HomePage/homePage";
 import heroSection from "./pages/HomePage/sections/heroSection";
@@ -73,6 +73,7 @@ export const schemaTypes = [
 
   project,
   navigation,
+  footer,
 
   homePage,
   heroSection,
