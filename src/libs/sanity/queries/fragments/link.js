@@ -2,7 +2,7 @@
 // Mirrors the reference site's pattern: store an `internal.link` reference
 // PLUS a resolved `href` string, so components (SanityLink, SanityRichText's
 // LinkField) can keep reading a plain `link.href` and never need to know
-// about references at all — only the query layer needs updating when a new
+// about references at all -- only the query layer needs updating when a new
 // page type is added.
 //
 // Add a new line here whenever a new top-level page schema is introduced.
@@ -14,6 +14,10 @@ export const internalHrefResolver = `select(
   internal.link->_type == "workPage" => "/work",
   internal.link->_type == "project" => "/work/" + internal.link->slug.current,
   internal.link->_type == "legalPage" => "/" + internal.link->slug.current,
+  internal.link->_type == "page" => select(
+    internal.link->uri.current match "/*" => internal.link->uri.current,
+    "/" + internal.link->uri.current
+  ),
   href
 )`;
 
