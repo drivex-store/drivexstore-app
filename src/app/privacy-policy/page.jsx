@@ -2,13 +2,14 @@ import { notFound } from "next/navigation";
 import PrivacyPolicyPageSection from "@views/privacy-policy/PrivacyPolicyPageSection";
 import { getPrivacyPolicyPageSectionSlug, getAllPrivacyPolicyPageSectionSlug } from "@libs/sanity/queries/privacy-policy/PrivacyPolicyPageData";
 
+const SLUG = "privacy-policy";
+
 const sectionRegistry = {
   textSectionField: PrivacyPolicyPageSection,
 };
 
-export default async function PrivacyPolicyPage({ params }) {
-  const { slug } = await params;
-  const page = await getPrivacyPolicyPageSectionSlug(slug);
+export default async function PrivacyPolicyPage() {
+  const page = await getPrivacyPolicyPageSectionSlug(SLUG);
 
   if (!page) {
     notFound();
@@ -34,14 +35,8 @@ export default async function PrivacyPolicyPage({ params }) {
   });
 }
 
-export async function generateStaticParams() {
-  const slugs = await getAllPrivacyPolicyPageSectionSlug();
-  return (slugs || []).filter(({ slug }) => slug);
-}
-
-export async function generateMetadata({ params }) {
-  const { slug } = await params;
-  const page = await getPrivacyPolicyPageSectionSlug(slug);
+export async function generateMetadata() {
+  const page = await getPrivacyPolicyPageSectionSlug(SLUG);
 
   if (!page) {
     return { title: "Not found" };
