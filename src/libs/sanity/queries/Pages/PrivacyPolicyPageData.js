@@ -19,12 +19,12 @@ const LEGAL_PAGE_SLUGS_QUERY = `*[_type == "page" && defined(uri.current)]{
   "slug": uri.current
 }`;
 
-export async function getLegalPageBySlug(slug) {
+export async function getPrivacyPolicyPageSectionSlug(slug) {
   const uri = slug.startsWith("/") ? slug : `/${slug}`;
   return sanityClient.fetch(LEGAL_PAGE_QUERY, { uri }, { next: { revalidate: 60 } });
 }
 
-export async function getAllLegalPageSlugs() {
+export async function getAllPrivacyPolicyPageSectionSlug() {
   const data = await sanityClient.fetch(LEGAL_PAGE_SLUGS_QUERY, {}, { next: { revalidate: 60 } });
   return data.map((item) => ({
     slug: item.slug ? item.slug.replace(/^\//, "") : "",
