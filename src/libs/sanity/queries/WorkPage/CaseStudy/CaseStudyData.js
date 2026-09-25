@@ -8,16 +8,12 @@ const imageProjection = `{
   "hotspot": hotspot, "lqip": asset->metadata.lqip, "title": asset->title
 }`;
 
-// Case-study media objects only ever carry {type, image, externalVideoUrl, aspectRatio} —
-// no Mux `video` type — unlike the site-wide `media` object.
 const caseStudyMediaProjection = `{
   type,
   aspectRatio,
   "image": image${imageProjection},
   externalVideoUrl
 }`;
-
-// mediaSectionField's `appMedia` additionally carries video playback options.
 const appMediaProjection = `{
   type,
   aspectRatio,
@@ -42,8 +38,6 @@ const buttonGroupProjection = `{
   gap
 }`;
 
-// Every possible shape a `components[]` entry (inside a column) can take, keyed by _type.
-// GROQ merges whichever conditional projection matches the object's _type.
 const componentsProjection = `{
   _key,
   _type,
@@ -91,6 +85,7 @@ const componentsProjection = `{
     "headline": headline${headlineProjection}
   },
   _type == "cardsComponent" => {
+    fullHeight,
     "cards": cards[]{
       _key,
       _type,
@@ -110,7 +105,6 @@ const columnsProjection = `{
   "components": components[]${componentsProjection}
 }`;
 
-// Every possible shape a `pageBuilder.sectionsArray[]` entry can take, keyed by _type.
 const sectionsProjection = `{
   _key,
   _type,
