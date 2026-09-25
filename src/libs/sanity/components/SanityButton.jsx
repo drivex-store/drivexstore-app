@@ -3,7 +3,9 @@ import { AnimatedLink } from '@animations/components/AnimatedLink';
 import { SanityLink } from "@libs/sanity/components/SanityLink"; 
 
 export function SanityButton({ button, className }) {
-  if (!button.link?.href) return null;
+  const link = button.link;
+  const hasDestination = Boolean(link?.href) || (link?.type === "modal" && Boolean(link?.modalId));
+  if (!hasDestination) return null;
 
   if (button.variant === "link") {
     const isExternal = button.link.type === "external";
